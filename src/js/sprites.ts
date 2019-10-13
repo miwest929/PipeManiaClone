@@ -37,11 +37,14 @@ enum Tiles {
   RightEnd,
   BottomEnd,
   LeftEnd,
-  Blank // should always be last
+  Blank, // should always be last,
+  CrossVertical,
+  CrossHorizontal
 };
 let tiles:Tile[] = [
   vertical, horizontal, cross, bottomRightTurn,
   bottomLeftTurn, topRightTurn, topLeftTurn,
   topStart, bottomStart, rightStart, leftStart,
-  topEnd, rightEnd, bottomEnd, leftEnd, blank
+  topEnd, rightEnd, bottomEnd, leftEnd, blank,
+  cross, cross
 ];

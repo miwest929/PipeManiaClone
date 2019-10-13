@@ -14,6 +14,10 @@ tileMovements[Tiles.LeftStart] = { "WEST": "WEST" };
 tileMovements[Tiles.RightStart] = { "EAST": "EAST" };
 tileMovements[Tiles.TopStart] = { "SOUTH": "SOUTH" };
 tileMovements[Tiles.BottomStart] = { "NORTH": "NORTH" };
+tileMovements[Tiles.LeftEnd] = { "WEST": "WEST" };
+tileMovements[Tiles.RightEnd] = { "EAST": "EAST" };
+tileMovements[Tiles.TopEnd] = { "SOUTH": "SOUTH" };
+tileMovements[Tiles.BottomEnd] = { "NORTH": "NORTH" };
 function getNextDirection(currTileId, currDirection) {
     if (!tileMovements[currTileId]) {
         return "NONE";
@@ -99,9 +103,29 @@ progressByTile[Tiles.TopLeftTurn] = [
     [11, 2, 4, 1],
     [11, 1, 4, 1]
 ];
-//progressByTile[Tiles.BottomRightTurn] = [
-//  [11]
-//]
+progressByTile[Tiles.BottomRightTurn] = [
+    [11, 24, 4, 1],
+    [11, 23, 4, 1],
+    [11, 22, 4, 1],
+    [11, 21, 4, 1],
+    [11, 20, 4, 1],
+    [11, 19, 4, 1],
+    [11, 18, 4, 1],
+    [11, 17, 5, 1],
+    [11, 16, 6, 1],
+    [11, 15, 7, 1],
+    [12, 14, 6, 1],
+    [13, 13, 5, 1],
+    [14, 12, 4, 1],
+    [15, 11, 3, 1],
+    [18, 11, 4, 0],
+    [19, 11, 4, 0],
+    [20, 11, 4, 0],
+    [21, 11, 4, 0],
+    [22, 11, 4, 0],
+    [23, 11, 4, 0],
+    [24, 11, 4, 0]
+];
 progressByTile[Tiles.TopRightTurn] = [
     [11, 1, 4, 1],
     [11, 2, 4, 1],
@@ -247,3 +271,47 @@ progressByTile[Tiles.TopEnd] = [
     [11, 11, 4, 1],
     [11, 12, 4, 1],
 ];
+progressByTile[Tiles.BottomEnd] = [
+    [11, 13, 4, 1],
+    [11, 14, 4, 1],
+    [11, 15, 4, 1],
+    [11, 16, 4, 1],
+    [11, 17, 4, 1],
+    [11, 18, 4, 1],
+    [11, 19, 4, 1],
+    [11, 20, 4, 1],
+    [11, 21, 4, 1],
+    [11, 22, 4, 1],
+    [11, 23, 4, 1],
+    [11, 24, 4, 1]
+];
+progressByTile[Tiles.RightEnd] = [
+    [13, 11, 4, 0],
+    [14, 11, 4, 0],
+    [15, 11, 4, 0],
+    [16, 11, 4, 0],
+    [17, 11, 4, 0],
+    [18, 11, 4, 0],
+    [19, 11, 4, 0],
+    [20, 11, 4, 0],
+    [21, 11, 4, 0],
+    [22, 11, 4, 0],
+    [23, 11, 4, 0],
+    [24, 11, 4, 0]
+];
+progressByTile[Tiles.LeftEnd] = [
+    [1, 11, 4, 0],
+    [2, 11, 4, 0],
+    [3, 11, 4, 0],
+    [4, 11, 4, 0],
+    [5, 11, 4, 0],
+    [6, 11, 4, 0],
+    [7, 11, 4, 0],
+    [8, 11, 4, 0],
+    [9, 11, 4, 0],
+    [10, 11, 4, 0],
+    [11, 11, 4, 0],
+    [12, 11, 4, 0]
+];
+progressByTile[Tiles.CrossVertical] = progressByTile[Tiles.Vertical];
+progressByTile[Tiles.CrossHorizontal] = progressByTile[Tiles.Horizontal];

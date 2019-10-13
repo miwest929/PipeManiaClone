@@ -1,4 +1,7 @@
-window.onclick = (event) => {
-  console.log("BEGIN THE OOZE");
-  pipeGrid.startOoze();
+canvas.onclick = (event) => {
+  manager.mouseClick(event.offsetX, event.offsetY);
+}
+
+canvas.onmousemove = (event) => {
+    manager.mouseMove(event.offsetX, event.offsetY);
 }

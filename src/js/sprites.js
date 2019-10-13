@@ -36,12 +36,15 @@ var Tiles;
     Tiles[Tiles["RightEnd"] = 12] = "RightEnd";
     Tiles[Tiles["BottomEnd"] = 13] = "BottomEnd";
     Tiles[Tiles["LeftEnd"] = 14] = "LeftEnd";
-    Tiles[Tiles["Blank"] = 15] = "Blank"; // should always be last
+    Tiles[Tiles["Blank"] = 15] = "Blank";
+    Tiles[Tiles["CrossVertical"] = 16] = "CrossVertical";
+    Tiles[Tiles["CrossHorizontal"] = 17] = "CrossHorizontal";
 })(Tiles || (Tiles = {}));
 ;
 var tiles = [
     vertical, horizontal, cross, bottomRightTurn,
     bottomLeftTurn, topRightTurn, topLeftTurn,
     topStart, bottomStart, rightStart, leftStart,
-    topEnd, rightEnd, bottomEnd, leftEnd, blank
+    topEnd, rightEnd, bottomEnd, leftEnd, blank,
+    cross, cross
 ];
