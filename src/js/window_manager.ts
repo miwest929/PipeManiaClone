@@ -43,24 +43,24 @@ class WindowManager {
     }
 
     mouseMove(x:number, y:number) {
-        let comp = this.getInBoundsComponent(x, y);
-        if (comp) {
-            comp.mouseMove(x, y);
+        let cbb = this.getInBoundsComponent(x, y);
+        if (cbb) {
+            cbb.component.mouseMove(x-cbb.bbox.x, y-cbb.bbox.y);
         }
     }
 
     mouseClick(x:number, y:number) {
-        let comp = this.getInBoundsComponent(x, y);
-        if (comp) {
-            comp.mouseClick(x, y);
+        let cbb = this.getInBoundsComponent(x, y);
+        if (cbb) {
+            cbb.component.mouseClick(x-cbb.bbox.x, y-cbb.bbox.y);
         }
     }
 
     private getInBoundsComponent(x:number, y:number) {
-        let c:Component = null;
+        let c:ComponentBoundingBox = null;
         this.components.forEach(cbb => {
             if (cbb.bbox.withinBounds(x, y)) {
-              c = cbb.component;       
+              c = cbb;       
             }
         });
 
@@ -110,6 +110,12 @@ class NextTileComponent implements Component {
     this.nextTileId = this.getRandomTileId();
     this.timeLeftSecs = 30;
     this.countdownTimer = setInterval(() => { this.timeLeftSecs -= 1;}, 1000);
+  }
+
+  consumeNextTileId() {
+      let tileId = this.nextTileId;
+      this.nextTileId = this.getRandomTileId();
+      return tileId;
   }
 
   mouseMove(x:number, y:number) {

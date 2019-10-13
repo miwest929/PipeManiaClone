@@ -7,6 +7,8 @@ var PipeGrid = /** @class */ (function () {
         this.heightInPx = this.rows * this.cellDim;
         this.startLocation = startLoc;
         this.endLocation = endLoc;
+        this.hoveredRow = -1;
+        this.hoveredCol = -1;
         this.grid = this.initGrid();
     }
     PipeGrid.prototype.placeTile = function (tileId, row, col) {
@@ -55,16 +57,28 @@ var PipeGrid = /** @class */ (function () {
     };
     PipeGrid.prototype.mouseMove = function (x, y) {
         console.log("MouseMove: ", x, y);
+        this.hoveredRow = Math.floor(y / this.cellDim);
+        this.hoveredCol = Math.floor(x / this.cellDim);
     };
     PipeGrid.prototype.mouseClick = function (x, y) {
         console.log("MouseClick: ", x, y);
         this.startOoze();
+        this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
     };
     PipeGrid.prototype.render = function (ctx, x, y) {
         this.renderGrid(ctx, x, y);
         this.renderCells(ctx, x, y);
         if (this.isOozing) {
             this.renderOoze(ctx, x, y);
+        }
+        if (this.hoveredCol !== -1 && this.hoveredRow !== -1) {
+            var hoveredX = this.hoveredCol * this.cellDim;
+            var hoveredY = this.hoveredRow * this.cellDim;
+            ctx.strokeStyle = "rgb(256,256,256)";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.rect(hoveredX + x, hoveredY + y, this.cellDim, this.cellDim);
+            ctx.stroke();
         }
     };
     PipeGrid.prototype.renderGrid = function (ctx, x, y) {

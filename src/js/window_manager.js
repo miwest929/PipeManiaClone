@@ -27,22 +27,22 @@ var WindowManager = /** @class */ (function () {
         });
     };
     WindowManager.prototype.mouseMove = function (x, y) {
-        var comp = this.getInBoundsComponent(x, y);
-        if (comp) {
-            comp.mouseMove(x, y);
+        var cbb = this.getInBoundsComponent(x, y);
+        if (cbb) {
+            cbb.component.mouseMove(x - cbb.bbox.x, y - cbb.bbox.y);
         }
     };
     WindowManager.prototype.mouseClick = function (x, y) {
-        var comp = this.getInBoundsComponent(x, y);
-        if (comp) {
-            comp.mouseClick(x, y);
+        var cbb = this.getInBoundsComponent(x, y);
+        if (cbb) {
+            cbb.component.mouseClick(x - cbb.bbox.x, y - cbb.bbox.y);
         }
     };
     WindowManager.prototype.getInBoundsComponent = function (x, y) {
         var c = null;
         this.components.forEach(function (cbb) {
             if (cbb.bbox.withinBounds(x, y)) {
-                c = cbb.component;
+                c = cbb;
             }
         });
         return c;
@@ -72,6 +72,11 @@ var NextTileComponent = /** @class */ (function () {
         this.timeLeftSecs = 30;
         this.countdownTimer = setInterval(function () { _this.timeLeftSecs -= 1; }, 1000);
     }
+    NextTileComponent.prototype.consumeNextTileId = function () {
+        var tileId = this.nextTileId;
+        this.nextTileId = this.getRandomTileId();
+        return tileId;
+    };
     NextTileComponent.prototype.mouseMove = function (x, y) {
     };
     NextTileComponent.prototype.mouseClick = function (x, y) {

@@ -24,10 +24,12 @@ pipeGrid.placeTile(Tiles.Horizontal, 7, 1);
 pipeGrid.placeTile(Tiles.Horizontal, 7, 2);
 pipeGrid.placeTile(Tiles.Cross, 7, 3);
 pipeGrid.placeTile(Tiles.LeftEnd, 7, 4);
+var nextTileBb = new BoundingBox(620, 20, 80, 400);
+var nextTileView = new NextTileComponent(nextTileBb.width, nextTileBb.height);
 function setupViews() {
     var manager = new WindowManager();
-    var nextTileBb = new BoundingBox(620, 20, 80, 400);
-    var nextTileView = new NextTileComponent(nextTileBb.width, nextTileBb.height);
+    //let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 400);
+    //let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
     manager.registerComponent(nextTileView, nextTileBb);
     var gridComponent = new PipeGridComponent(pipeGrid);
     manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));

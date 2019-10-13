@@ -7,6 +7,9 @@ class PipeGrid {
     grid: number[][];
     startLocation: [number, number, number];
     endLocation: [number, number, number];
+
+    hoveredRow: number;
+    hoveredCol: number;
   
     isOozing: boolean;
     oozeRow: number;
@@ -24,6 +27,8 @@ class PipeGrid {
       this.heightInPx = this.rows * this.cellDim;
       this.startLocation = startLoc;
       this.endLocation = endLoc;
+      this.hoveredRow = -1;
+      this.hoveredCol = -1;
       this.grid = this.initGrid();
     }
   
@@ -81,11 +86,15 @@ class PipeGrid {
 
     mouseMove(x:number, y:number) {
       console.log("MouseMove: ", x, y);
+      this.hoveredRow = Math.floor(y / this.cellDim);
+      this.hoveredCol = Math.floor(x / this.cellDim);
     }
 
     mouseClick(x:number, y:number) {
         console.log("MouseClick: ", x, y);
         this.startOoze();
+
+        this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
     }    
 
     render(ctx: CanvasRenderingContext2D, x: number, y: number) {
@@ -94,6 +103,17 @@ class PipeGrid {
   
       if (this.isOozing) {
         this.renderOoze(ctx, x, y);
+      }
+
+      if (this.hoveredCol !== -1 && this.hoveredRow !== -1) {
+        let hoveredX:number = this.hoveredCol * this.cellDim;
+        let hoveredY:number = this.hoveredRow * this.cellDim;
+        ctx.strokeStyle = "rgb(256,256,256)";
+        ctx.lineWidth = 2;
+    
+        ctx.beginPath();
+        ctx.rect(hoveredX+x, hoveredY+y, this.cellDim, this.cellDim);
+        ctx.stroke();
       }
     }
   

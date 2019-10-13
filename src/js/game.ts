@@ -30,11 +30,13 @@ pipeGrid.placeTile(Tiles.Horizontal, 7, 2);
 pipeGrid.placeTile(Tiles.Cross, 7, 3);
 pipeGrid.placeTile(Tiles.LeftEnd, 7, 4);
 
+let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 400);
+let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
 function setupViews() {
   let manager:WindowManager = new WindowManager();
 
-  let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 400);
-  let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
+  //let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 400);
+  //let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
   manager.registerComponent(nextTileView, nextTileBb);  
 
   let gridComponent = new PipeGridComponent(pipeGrid);
