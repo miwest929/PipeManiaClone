@@ -6,31 +6,12 @@ function adjustValue(value, srcDim, destDim) {
   return value * aspectRatio;
 }
 
-let canvas:HTMLCanvasElement = <HTMLCanvasElement>document.getElementById('canvas');
+let canvas:HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
 let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
-let pipeGrid:PipeGrid = new PipeGrid(
-  12, 12, CELL_DIM, [0, 0, Tiles.RightStart], [1, 2, Tiles.TopEnd]
-);
+let pipeGrid:PipeGrid = new PipeGrid(12, 12, CELL_DIM);
+pipeGrid.loadPuzzle(getPuzzle(1));
 
-pipeGrid.placeTile(Tiles.Horizontal, 0, 1);
-pipeGrid.placeTile(Tiles.BottomLeftTurn, 0, 2);
-pipeGrid.placeTile(Tiles.Vertical, 1, 2);
-pipeGrid.placeTile(Tiles.Vertical, 2, 2);
-pipeGrid.placeTile(Tiles.Vertical, 3, 2);
-pipeGrid.placeTile(Tiles.TopLeftTurn, 4, 2);
-pipeGrid.placeTile(Tiles.TopRightTurn, 4, 1);
-pipeGrid.placeTile(Tiles.BottomLeftTurn, 3, 1);
-pipeGrid.placeTile(Tiles.BottomRightTurn, 3, 0);
-pipeGrid.placeTile(Tiles.Vertical, 4, 0);
-pipeGrid.placeTile(Tiles.Vertical, 5, 0);
-pipeGrid.placeTile(Tiles.Vertical, 6, 0);
-pipeGrid.placeTile(Tiles.TopRightTurn, 7, 0);
-pipeGrid.placeTile(Tiles.Horizontal, 7, 1);
-pipeGrid.placeTile(Tiles.Horizontal, 7, 2);
-pipeGrid.placeTile(Tiles.Cross, 7, 3);
-pipeGrid.placeTile(Tiles.LeftEnd, 7, 4);
-
-let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 400);
+let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 580);
 let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
 function setupViews() {
   let manager:WindowManager = new WindowManager();
@@ -41,6 +22,12 @@ function setupViews() {
 
   let gridComponent = new PipeGridComponent(pipeGrid);
   manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));
+
+  //let countdownBb:BoundingBox = new BoundingBox(580, 20, 30, 580);
+  let countdownComponent = new CountdownTimer(10, 580, () => {
+    pipeGrid.startOoze();
+  });
+  manager.registerComponent(countdownComponent, pipeGrid.boundingBox(20, 20));
 
   return manager;
 }

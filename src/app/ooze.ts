@@ -5,22 +5,23 @@ const NORTH: string = "NORTH";
 type DirectionMap = {
   [key: string]: string
 };
-let tileMovements: {[key: number]: DirectionMap; } = {};
-tileMovements[Tiles.Horizontal] = {"WEST": "WEST", "EAST": "EAST", "DEFAULT": "WEST"};
-tileMovements[Tiles.BottomLeftTurn] = {"EAST": "SOUTH", "NORTH": "WEST", "DEFAULT": "EAST"};
-tileMovements[Tiles.BottomRightTurn] = {"WEST": "SOUTH", "NORTH": "EAST", "DEFAULT": "WEST"};
-tileMovements[Tiles.TopRightTurn] = {"SOUTH": "EAST", "WEST": "NORTH", "DEFAULT": "EAST"};
-tileMovements[Tiles.TopLeftTurn] = {"SOUTH": "WEST", "EAST": "NORTH", "DEFAULT": "EAST"};
-tileMovements[Tiles.Vertical] = {"SOUTH": "SOUTH", "NORTH": "NORTH", "DEFAULT": "SOUTH"};
-tileMovements[Tiles.Cross] = {"SOUTH": "SOUTH", "NORTH": "NORTH", "EAST": "EAST", "WEST": "WEST", "DEFAULT": "SOUTH"};
-tileMovements[Tiles.LeftStart] = {"WEST": "WEST"};
-tileMovements[Tiles.RightStart] = {"EAST": "EAST"};
-tileMovements[Tiles.TopStart] = {"SOUTH": "SOUTH"};
-tileMovements[Tiles.BottomStart] = {"NORTH": "NORTH"};
-tileMovements[Tiles.LeftEnd] = {"WEST": "WEST"};
-tileMovements[Tiles.RightEnd] = {"EAST": "EAST"};
-tileMovements[Tiles.TopEnd] = {"SOUTH": "SOUTH"};
-tileMovements[Tiles.BottomEnd] = {"NORTH": "NORTH"};
+let tileMovements: {[key: number]: DirectionMap; } = {
+    [Tiles.Horizontal]: {"WEST": "WEST", "EAST": "EAST", "DEFAULT": "WEST"},
+    [Tiles.BottomLeftTurn]: {"EAST": "SOUTH", "NORTH": "WEST", "DEFAULT": "EAST"},
+    [Tiles.BottomRightTurn]: {"WEST": "SOUTH", "NORTH": "EAST", "DEFAULT": "WEST"},
+    [Tiles.TopRightTurn]: {"SOUTH": "EAST", "WEST": "NORTH", "DEFAULT": "EAST"},
+    [Tiles.TopLeftTurn]: {"SOUTH": "WEST", "EAST": "NORTH", "DEFAULT": "EAST"},
+    [Tiles.Vertical]: {"SOUTH": "SOUTH", "NORTH": "NORTH", "DEFAULT": "SOUTH"},
+    [Tiles.Cross]: {"SOUTH": "SOUTH", "NORTH": "NORTH", "EAST": "EAST", "WEST": "WEST", "DEFAULT": "SOUTH"},
+    [Tiles.LeftStart]: {"WEST": "WEST"},
+    [Tiles.RightStart]: {"EAST": "EAST"},
+    [Tiles.TopStart]: {"SOUTH": "SOUTH"},
+    [Tiles.BottomStart]: {"NORTH": "NORTH"},
+    [Tiles.LeftEnd]: {"WEST": "WEST"},
+    [Tiles.RightEnd]: {"EAST": "EAST"},
+    [Tiles.TopEnd]: {"SOUTH": "SOUTH"},
+    [Tiles.BottomEnd]: {"NORTH": "NORTH"}
+};
 
 function getNextDirection(currTileId, currDirection) {
   if (!tileMovements[currTileId]) {

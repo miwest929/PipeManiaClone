@@ -98,23 +98,19 @@ class PipeGridComponent implements Component {
 }
 
 class NextTileComponent implements Component {
-  nextTileId:number;
+  nextTileIds:number[];
   width:number;
   height:number;
-  timeLeftSecs:number;
-  countdownTimer:number;
 
   constructor(width:number, height:number) {
     this.width = width;
     this.height = height;
-    this.nextTileId = this.getRandomTileId();
-    this.timeLeftSecs = 30;
-    this.countdownTimer = setInterval(() => { this.timeLeftSecs -= 1;}, 1000);
+    this.nextTileIds = [this.getRandomTileId(), this.getRandomTileId(), this.getRandomTileId(), this.getRandomTileId()];
   }
 
   consumeNextTileId() {
-      let tileId = this.nextTileId;
-      this.nextTileId = this.getRandomTileId();
+      let tileId = this.nextTileIds.shift();
+      this.nextTileIds.push(this.getRandomTileId());
       return tileId;
   }
 
@@ -126,14 +122,13 @@ class NextTileComponent implements Component {
 
   render(ctx:CanvasRenderingContext2D, x:number, y:number) {
     ctx.strokeStyle = "rgb(100,100,100)";
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 10;
 
     ctx.beginPath();
     ctx.rect(x, y, this.width, this.height);
     ctx.stroke();
   
     this.renderNextTileView(ctx, x, y);
-    this.renderTimerView(ctx, x, y);
   }
 
   private renderNextTileView(ctx, x, y) {
@@ -141,20 +136,21 @@ class NextTileComponent implements Component {
     ctx.fillStyle = "#ffffff";
     ctx.fillText("NEXT", x+10, y+40);
 
-    tiles[this.nextTileId].renderAt(ctx, x+(this.width/4), y+50, 32, 32);
-  }
+    let nextY = 50;
+    this.nextTileIds.forEach((tileId) => {
+        tiles[tileId].renderAt(ctx, x+(this.width/4)-8, y+nextY, 48, 48);
+        nextY += 60;
+    });
 
-  private renderTimerView(ctx, x, y) {
-    ctx.font = "20px verdana";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("TIME", x+10, y+120);
-
-    ctx.font = "20px verdana";
-    ctx.fillStyle = "rgb(200, 200, 200)";
-    ctx.fillText(this.timeLeftSecs.toString(), x+10, y+150);
+    // render border around the very next tile
+    ctx.strokeStyle = "rgb(256, 256, 0)";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.rect(x+(this.width/4)-10, y+48, 52, 52);
+    ctx.stroke();
   }
 
   private getRandomTileId() {
-    return Math.floor(Math.random() * 6);
+    return Math.floor(Math.random() * 7);
   }
 }

@@ -20,6 +20,11 @@ let rightEnd:Tile = new Tile(spritesImg, 138, 164, TILE_DIM, TILE_DIM);
 let bottomEnd:Tile = new Tile(spritesImg, 164, 164, TILE_DIM, TILE_DIM);
 let leftEnd:Tile = new Tile(spritesImg, 191, 164, TILE_DIM, TILE_DIM);
 let blank:Tile = new Tile(spritesImg, 191, 191, TILE_DIM, TILE_DIM);
+let indestructible:Tile = new Tile(spritesImg, 29, 110, TILE_DIM, TILE_DIM);
+
+function isNonReplacableTile(tileId: number): boolean {
+    return tileId >= 7 && tileId <= 14 || tileId == Tiles.Indestructible;
+}
 
 enum Tiles {
   Vertical = 0,
@@ -39,12 +44,13 @@ enum Tiles {
   LeftEnd,
   Blank, // should always be last,
   CrossVertical,
-  CrossHorizontal
+  CrossHorizontal,
+  Indestructible
 };
 let tiles:Tile[] = [
   vertical, horizontal, cross, bottomRightTurn,
   bottomLeftTurn, topRightTurn, topLeftTurn,
   topStart, bottomStart, rightStart, leftStart,
   topEnd, rightEnd, bottomEnd, leftEnd, blank,
-  cross, cross
+  cross, cross, indestructible
 ];

@@ -1,3 +1,5 @@
+const OOZING_DELAY_MS = 2000.0;
+
 class PipeGrid {
     rows: number;
     cols: number;
@@ -19,34 +21,88 @@ class PipeGrid {
     oozedCells: number[][]; // array of coords array
     oozeReverse: boolean; // should render ooze in reverse
   
-    constructor(rows: number, cols: number, cellDim: number, startLoc: [number, number, number], endLoc: [number, number, number]) {
+    constructor(rows: number, cols: number, cellDim: number) {
       this.rows = rows;
       this.cols = cols;
       this.cellDim = cellDim;
       this.widthInPx = this.cols * this.cellDim;
       this.heightInPx = this.rows * this.cellDim;
-      this.startLocation = startLoc;
-      this.endLocation = endLoc;
+      this.startLocation = [0,0,0];
+      this.endLocation = [0,0,0];
       this.hoveredRow = -1;
       this.hoveredCol = -1;
       this.grid = this.initGrid();
     }
   
-    placeTile(tileId:number, row:number, col:number) {
+    public placeTile(tileId:number, row:number, col:number) {
       this.grid[row][col] = tileId;
     }
-  
-    startOoze() {
-      this.isOozing = true;
-      this.oozeRow = this.startLocation[0];
-      this.oozeCol = this.startLocation[1];
-      this.oozeProgressInCell = 0.0;
-      this.oozedCells = [];
-      this.oozeDirection = getStartingDirection(this.grid[this.oozeRow][this.oozeCol]);
-      this.oozeReverse = false;
+
+    public loadPuzzle(puzzle: Puzzle): void {
+      const startTileId = this.convertToStartTileId(puzzle.startOrient);
+      this.placeTile(startTileId, puzzle.startCoord.row, puzzle.startCoord.col);
+      this.startLocation[0] = puzzle.startCoord.row;
+      this.startLocation[1] = puzzle.startCoord.col;
+      this.startLocation[2] = startTileId;
+
+      const endTileId = this.convertToEndTileId(puzzle.endOrient);
+      this.placeTile(endTileId, puzzle.endCoord.row, puzzle.endCoord.col);
+      this.endLocation[0] = puzzle.endCoord.row;
+      this.endLocation[1] = puzzle.endCoord.col;
+      this.endLocation[2] = endTileId;
+
+      puzzle.blocks.forEach((b) => {
+        this.placeTile(Tiles.Indestructible, b.row, b.col);        
+      });
+    }
+
+    private convertToStartTileId(direction: string): number {
+      switch (direction) {
+        case "NORTH":
+        return Tiles.TopStart;
+          break;
+        case "SOUTH":
+        return Tiles.BottomStart;
+          break;
+        case "WEST":
+        return Tiles.LeftStart;
+          break;
+        case "EAST":
+          return Tiles.RightStart;
+          break;
+      }
+    }
+
+    private convertToEndTileId(direction: string): number {
+      switch (direction) {
+        case "NORTH":
+        return Tiles.TopEnd;
+          break;
+        case "SOUTH":
+        return Tiles.BottomEnd;
+          break;
+        case "WEST":
+        return Tiles.LeftEnd;
+          break;
+        case "EAST":
+        return Tiles.RightEnd;
+          break;
+      }      
+    } 
+
+    public startOoze() {
+      if (!this.isOozing) {
+        this.isOozing = true;
+        this.oozeRow = this.startLocation[0];
+        this.oozeCol = this.startLocation[1];
+        this.oozeProgressInCell = 0.0;
+        this.oozedCells = [];
+        this.oozeDirection = getStartingDirection(this.grid[this.oozeRow][this.oozeCol]);
+        this.oozeReverse = false;
+      }
     }
   
-    initGrid() {
+    private initGrid() {
       this.grid = [];
     
       for (let r = 0; r < this.rows; r++) {
@@ -57,22 +113,21 @@ class PipeGrid {
         this.grid.push(arr);
       }
   
-      this.placeTile(this.startLocation[2], this.startLocation[0], this.startLocation[1])
-      this.placeTile(this.endLocation[2], this.endLocation[0], this.endLocation[1]);
-  
       return this.grid;
     }
   
     update() {
       if (this.isOozing) {
-        this.oozeProgressInCell += 0.02;
+        this.oozeProgressInCell += 0.005;
   
         // ooze overflowed current cell. Move on to the next
         if (this.oozeProgressInCell > 1.0) {
+          console.log("Overflowed. Flowing to next Tile");
           this.oozeProgressInCell = 0.0;
-          let oozeCell: number = this.grid[this.oozeRow][this.oozeCol];
-          if (tileMovements[oozeCell]) {
-            this.oozeDirection = getNextDirection(oozeCell, this.oozeDirection);
+          let oozeCellId: number = this.grid[this.oozeRow][this.oozeCol];
+          if (tileMovements[oozeCellId]) {
+            this.oozeDirection = getNextDirection(oozeCellId, this.oozeDirection);
+            console.log(`Default = ${tileMovements[oozeCellId]["DEFAULT"]}, NextDirection = ${this.oozeDirection}`);            
             this.oozedCells.push([this.oozeRow, this.oozeCol]);
             let newCoords = this.getNextOozeCell(this.oozeDirection);
             this.oozeRow = newCoords[0];
@@ -85,16 +140,14 @@ class PipeGrid {
     }
 
     mouseMove(x:number, y:number) {
-      console.log("MouseMove: ", x, y);
       this.hoveredRow = Math.floor(y / this.cellDim);
       this.hoveredCol = Math.floor(x / this.cellDim);
     }
 
     mouseClick(x:number, y:number) {
-        console.log("MouseClick: ", x, y);
-        this.startOoze();
-
-        this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
+        if (!isNonReplacableTile(this.grid[this.hoveredRow][this.hoveredCol])) {
+          this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
+        }
     }    
 
     render(ctx: CanvasRenderingContext2D, x: number, y: number) {
@@ -232,7 +285,7 @@ class PipeGrid {
     }
   
     private renderOozeLine(startX: number, startY: number, length: number, direction: number) {
-      ctx.strokeStyle = "rgb(0, 153, 51)";
+      ctx.strokeStyle = "rgb(153, 255, 179)";
       ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(startX, startY);
