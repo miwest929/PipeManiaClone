@@ -1,6 +1,9 @@
 let TILE_DIM:number = 26;
 let spritesRepo:SpriteRepository = new SpriteRepository([
-    './src/img/sprites.png'
+  imgUrl('sprites.png'),
+  imgUrl('RotateClockwise.png'),
+  imgUrl('RotateCounterClockwise.png'),
+  imgUrl('FastForward.png')
 ]);
 let spritesImg:HTMLImageElement = spritesRepo.fetch('sprites').image;
 
@@ -21,6 +24,15 @@ let bottomEnd:Tile = new Tile(spritesImg, 164, 164, TILE_DIM, TILE_DIM);
 let leftEnd:Tile = new Tile(spritesImg, 191, 164, TILE_DIM, TILE_DIM);
 let blank:Tile = new Tile(spritesImg, 191, 191, TILE_DIM, TILE_DIM);
 let indestructible:Tile = new Tile(spritesImg, 29, 110, TILE_DIM, TILE_DIM);
+
+let rotateClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateClockwise').image;
+let rotateCounterClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateCounterClockwise').image;
+let fastForwardImg:HTMLImageElement = spritesRepo.fetch('FastForward').image;
+
+
+function imgUrl(filename: string) {
+  return `./src/img/${filename}`;
+}
 
 function isNonReplacableTile(tileId: number): boolean {
     return tileId >= 7 && tileId <= 14 || tileId == Tiles.Indestructible;
