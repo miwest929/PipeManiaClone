@@ -146,6 +146,7 @@ class PipeGrid {
 
     mouseClick(x:number, y:number) {
         if (!isNonReplacableTile(this.grid[this.hoveredRow][this.hoveredCol])) {
+          eventNotifier.notify(TILE_DROPPED_EVENT, {});
           this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
         }
     }    

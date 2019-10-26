@@ -13,23 +13,38 @@ pipeGrid.loadPuzzle(getPuzzle(1));
 
 let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 580);
 let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
-function setupViews() {
-  let manager:WindowManager = new WindowManager();
+let manager:WindowManager = new WindowManager();
 
-  //let nextTileBb:BoundingBox = new BoundingBox(620, 20, 80, 400);
-  //let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
-  manager.registerComponent(nextTileView, nextTileBb);  
+manager.registerComponent(nextTileView, nextTileBb);  
 
-  let gridComponent = new PipeGridComponent(pipeGrid);
-  manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));
+let gridComponent = new PipeGridComponent(pipeGrid);
+manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));
 
-  //let countdownBb:BoundingBox = new BoundingBox(580, 20, 30, 580);
-  let countdownComponent = new CountdownTimer(10, 580, () => {
-    pipeGrid.startOoze();
-  });
-  manager.registerComponent(countdownComponent, pipeGrid.boundingBox(20, 20));
+let countdownBb:BoundingBox = new BoundingBox(600, 20, 10, 580);
+let countdownComponent = new CountdownTimer(countdownBb.width, countdownBb.height);
 
-  return manager;
+manager.registerComponent(countdownComponent, countdownBb);
+
+// ----------------- EVENT OBSERVERS -------------------
+let eventNotifier = new EventNotification();
+
+eventNotifier.attach(COUNTDOWN_FINISHED_EVENT, () => {
+  pipeGrid.startOoze();
+});
+
+eventNotifier.attach(TILE_DROPPED_EVENT, () => {
+  if (!pipeGrid.isOozing) {
+    countdownComponent.startCountdown();
+  }
+});
+// -----------------------------------------------------
+
+canvas.onclick = (event) => {
+  manager.mouseClick(event.offsetX, event.offsetY);
+}
+
+canvas.onmousemove = (event) => {
+    manager.mouseMove(event.offsetX, event.offsetY);
 }
 
 function render(ctx) {
@@ -51,5 +66,4 @@ function gameLoop() {
   window.requestAnimationFrame(gameLoop);
 }
 
-let manager = setupViews();
 gameLoop();

@@ -1,3 +1,7 @@
+interface Array<T> {
+    fill(value: T): Array<T>;
+}
+
 class BoundingBox {
     x:number;
     y:number;
@@ -43,6 +47,7 @@ class WindowManager {
     }
 
     mouseMove(x:number, y:number) {
+        console.log(`MouseMove: ${x}, ${y}`);
         let cbb = this.getInBoundsComponent(x, y);
         if (cbb) {
             cbb.component.mouseMove(x-cbb.bbox.x, y-cbb.bbox.y);
@@ -97,6 +102,7 @@ class PipeGridComponent implements Component {
     }
 }
 
+const NEXT_TILE_CNT = 8;
 class NextTileComponent implements Component {
   nextTileIds:number[];
   width:number;
@@ -105,7 +111,7 @@ class NextTileComponent implements Component {
   constructor(width:number, height:number) {
     this.width = width;
     this.height = height;
-    this.nextTileIds = [this.getRandomTileId(), this.getRandomTileId(), this.getRandomTileId(), this.getRandomTileId()];
+    this.nextTileIds = Array(NEXT_TILE_CNT).fill(0).map(() => {return this.getRandomTileId();});
   }
 
   consumeNextTileId() {
@@ -150,7 +156,7 @@ class NextTileComponent implements Component {
     ctx.stroke();
   }
 
-  private getRandomTileId() {
+  private getRandomTileId(): number {
     return Math.floor(Math.random() * 7);
   }
 }
