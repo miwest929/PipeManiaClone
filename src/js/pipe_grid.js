@@ -10,6 +10,7 @@ var PipeGrid = /** @class */ (function () {
         this.endLocation = [0, 0, 0];
         this.hoveredRow = -1;
         this.hoveredCol = -1;
+        this.oozeProgressTick = 0.005;
         this.grid = this.initGrid();
     }
     PipeGrid.prototype.placeTile = function (tileId, row, col) {
@@ -65,6 +66,7 @@ var PipeGrid = /** @class */ (function () {
     };
     PipeGrid.prototype.startOoze = function () {
         if (!this.isOozing) {
+            this.oozeProgressTick = 0.005;
             this.isOozing = true;
             this.oozeRow = this.startLocation[0];
             this.oozeCol = this.startLocation[1];
@@ -87,7 +89,7 @@ var PipeGrid = /** @class */ (function () {
     };
     PipeGrid.prototype.update = function () {
         if (this.isOozing) {
-            this.oozeProgressInCell += 0.005;
+            this.oozeProgressInCell += this.oozeProgressTick;
             // ooze overflowed current cell. Move on to the next
             if (this.oozeProgressInCell > 1.0) {
                 console.log("Overflowed. Flowing to next Tile");
@@ -115,6 +117,9 @@ var PipeGrid = /** @class */ (function () {
             eventNotifier.notify(TILE_DROPPED_EVENT, {});
             this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
         }
+    };
+    PipeGrid.prototype.fastForwardOoze = function () {
+        this.oozeProgressTick = 0.25;
     };
     PipeGrid.prototype.render = function (ctx, x, y) {
         this.renderGrid(ctx, x, y);

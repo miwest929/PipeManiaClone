@@ -28,7 +28,7 @@ interface Component {
       }
   }
   
-  const NEXT_TILE_CNT = 8;
+  const NEXT_TILE_CNT = 4;
   class NextTileComponent implements Component {
     nextTileIds:number[];
     width:number;
@@ -154,7 +154,7 @@ class RotateClockwiseBtnComponent implements Component {
   }
 
   mouseClick(x:number, y:number) {
-    eventNotifier.notify(ROTATE_NEXT_TILE_CLOCKWISE, {});
+    eventNotifier.notify(ROTATE_NEXT_TILE_CLOCKWISE_EVENT, {});
   }
 
   render(ctx:CanvasRenderingContext2D, x:number, y:number) {
@@ -175,10 +175,31 @@ class RotateCounterClockwiseBtnComponent implements Component {
   }
 
   mouseClick(x:number, y:number) {
-    eventNotifier.notify(ROTATE_NEXT_TILE_COUNTERCLOCKWISE, {});
+    eventNotifier.notify(ROTATE_NEXT_TILE_COUNTERCLOCKWISE_EVENT, {});
   }
 
   render(ctx:CanvasRenderingContext2D, x:number, y:number) {
     rotateCounterClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
+  }
+}
+
+class FastForwardBtnComponent implements Component {
+  width:number;
+  height:number;
+
+  constructor(width:number, height:number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  mouseMove(x:number, y:number) {
+  }
+
+  mouseClick(x:number, y:number) {
+    eventNotifier.notify(FAST_FORWARD_OOZE_EVENT, {});
+  }
+
+  render(ctx:CanvasRenderingContext2D, x:number, y:number) {
+    fastForwardBtn.renderAt(ctx, x, y, this.width, this.height);
   }
 }

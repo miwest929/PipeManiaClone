@@ -12,7 +12,7 @@ var PipeGridComponent = /** @class */ (function () {
     };
     return PipeGridComponent;
 }());
-var NEXT_TILE_CNT = 8;
+var NEXT_TILE_CNT = 4;
 var NextTileComponent = /** @class */ (function () {
     function NextTileComponent(width, height) {
         var _this = this;
@@ -115,7 +115,7 @@ var RotateClockwiseBtnComponent = /** @class */ (function () {
     RotateClockwiseBtnComponent.prototype.mouseMove = function (x, y) {
     };
     RotateClockwiseBtnComponent.prototype.mouseClick = function (x, y) {
-        eventNotifier.notify(ROTATE_NEXT_TILE_CLOCKWISE, {});
+        eventNotifier.notify(ROTATE_NEXT_TILE_CLOCKWISE_EVENT, {});
     };
     RotateClockwiseBtnComponent.prototype.render = function (ctx, x, y) {
         rotateClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
@@ -130,10 +130,25 @@ var RotateCounterClockwiseBtnComponent = /** @class */ (function () {
     RotateCounterClockwiseBtnComponent.prototype.mouseMove = function (x, y) {
     };
     RotateCounterClockwiseBtnComponent.prototype.mouseClick = function (x, y) {
-        eventNotifier.notify(ROTATE_NEXT_TILE_COUNTERCLOCKWISE, {});
+        eventNotifier.notify(ROTATE_NEXT_TILE_COUNTERCLOCKWISE_EVENT, {});
     };
     RotateCounterClockwiseBtnComponent.prototype.render = function (ctx, x, y) {
         rotateCounterClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
     };
     return RotateCounterClockwiseBtnComponent;
+}());
+var FastForwardBtnComponent = /** @class */ (function () {
+    function FastForwardBtnComponent(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+    FastForwardBtnComponent.prototype.mouseMove = function (x, y) {
+    };
+    FastForwardBtnComponent.prototype.mouseClick = function (x, y) {
+        eventNotifier.notify(FAST_FORWARD_OOZE_EVENT, {});
+    };
+    FastForwardBtnComponent.prototype.render = function (ctx, x, y) {
+        fastForwardBtn.renderAt(ctx, x, y, this.width, this.height);
+    };
+    return FastForwardBtnComponent;
 }());

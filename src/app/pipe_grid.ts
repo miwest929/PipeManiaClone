@@ -20,6 +20,7 @@ class PipeGrid {
     oozeDirection: string; // what direction is the ooze traveling towards
     oozedCells: number[][]; // array of coords array
     oozeReverse: boolean; // should render ooze in reverse
+    oozeProgressTick: number;
   
     constructor(rows: number, cols: number, cellDim: number) {
       this.rows = rows;
@@ -31,6 +32,7 @@ class PipeGrid {
       this.endLocation = [0,0,0];
       this.hoveredRow = -1;
       this.hoveredCol = -1;
+      this.oozeProgressTick = 0.005;
       this.grid = this.initGrid();
     }
   
@@ -92,6 +94,7 @@ class PipeGrid {
 
     public startOoze() {
       if (!this.isOozing) {
+        this.oozeProgressTick = 0.005;
         this.isOozing = true;
         this.oozeRow = this.startLocation[0];
         this.oozeCol = this.startLocation[1];
@@ -118,7 +121,7 @@ class PipeGrid {
   
     update() {
       if (this.isOozing) {
-        this.oozeProgressInCell += 0.005;
+        this.oozeProgressInCell += this.oozeProgressTick;
   
         // ooze overflowed current cell. Move on to the next
         if (this.oozeProgressInCell > 1.0) {
@@ -149,7 +152,11 @@ class PipeGrid {
           eventNotifier.notify(TILE_DROPPED_EVENT, {});
           this.grid[this.hoveredRow][this.hoveredCol] = nextTileView.consumeNextTileId();
         }
-    }    
+    } 
+    
+    fastForwardOoze() {
+      this.oozeProgressTick = 0.25;
+    }
 
     render(ctx: CanvasRenderingContext2D, x: number, y: number) {
       this.renderGrid(ctx, x, y);

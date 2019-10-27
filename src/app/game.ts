@@ -25,13 +25,18 @@ let countdownComponent = new CountdownTimer(countdownBb.width, countdownBb.heigh
 
 manager.registerComponent(countdownComponent, countdownBb, 100);
 
-const rotateCBb:BoundingBox = new BoundingBox(670, 135, 24, 24);
+const rotateCBb:BoundingBox = new BoundingBox(660, 135, 32, 32);
 const rotateClockwiseBtnComponent = new RotateClockwiseBtnComponent(rotateCBb.width, rotateCBb.height);
 manager.registerComponent(rotateClockwiseBtnComponent, rotateCBb, 1);
 
-const rotateCCBb:BoundingBox = new BoundingBox(710, 135, 24, 24);
+const rotateCCBb:BoundingBox = new BoundingBox(700, 135, 32, 32);
 const rotateCounterClockwiseBtnComponent = new RotateCounterClockwiseBtnComponent(rotateCCBb.width, rotateCCBb.height);
 manager.registerComponent(rotateCounterClockwiseBtnComponent, rotateCCBb, 1);
+
+const ffBb:BoundingBox = new BoundingBox(665, 365, 64, 64);
+const fastForwardBtnComponent = new FastForwardBtnComponent(ffBb.width, ffBb.height);
+manager.registerComponent(fastForwardBtnComponent, ffBb, 1);
+
 
 // ----------------- EVENT OBSERVERS -------------------
 let eventNotifier = new EventNotification();
@@ -46,13 +51,19 @@ eventNotifier.attach(TILE_DROPPED_EVENT, () => {
   }
 });
 
-eventNotifier.attach(ROTATE_NEXT_TILE_COUNTERCLOCKWISE, () => {
+eventNotifier.attach(ROTATE_NEXT_TILE_COUNTERCLOCKWISE_EVENT, () => {
   nextTileView.rotateNextCounterClockwise();
 });
 
-eventNotifier.attach(ROTATE_NEXT_TILE_CLOCKWISE, () => {
+eventNotifier.attach(ROTATE_NEXT_TILE_CLOCKWISE_EVENT, () => {
   nextTileView.rotateNextClockwise();
 });
+
+eventNotifier.attach(FAST_FORWARD_OOZE_EVENT, () => {
+  pipeGrid.fastForwardOoze();
+});
+
+
 // -----------------------------------------------------
 
 canvas.onclick = (event) => {
