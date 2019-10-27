@@ -1,6 +1,8 @@
 // event types
 let COUNTDOWN_FINISHED_EVENT = "countdown_finished_event";
 let TILE_DROPPED_EVENT = "tile_dropped_event";
+let ROTATE_NEXT_TILE_CLOCKWISE = "rotate_next_tile_clockwise";
+let ROTATE_NEXT_TILE_COUNTERCLOCKWISE = "rotate_next_tile_counterclockwise";
 
 class EventNotification {
   private observers:any;

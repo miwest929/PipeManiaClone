@@ -48,7 +48,6 @@ class WindowManager {
     }
 
     mouseMove(x:number, y:number) {
-        console.log(`MouseMove: ${x}, ${y}`);
         let cbb = this.getInBoundsComponent(x, y);
         if (cbb) {
             cbb.component.mouseMove(x-cbb.bbox.x, y-cbb.bbox.y);
@@ -64,7 +63,7 @@ class WindowManager {
 
     private getInBoundsComponent(x:number, y:number) {
         let c:RegisteredComponent = null;
-        let currZ:number = this.components[0].zIndex;
+        let currZ:number = 1000000.0;
         this.components.forEach(rc => {
             if (rc.bbox.withinBounds(x, y) && rc.zIndex < currZ) {
               c = rc;    

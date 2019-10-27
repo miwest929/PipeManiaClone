@@ -51,7 +51,51 @@ interface Component {
   
     mouseClick(x:number, y:number) {
     }
-  
+
+    public rotateNextCounterClockwise() {
+      const nextRotatedTileId = this.getCounterClockwise(this.nextTileIds[0]);
+      this.nextTileIds[0] = nextRotatedTileId;
+    }
+
+    public rotateNextClockwise() {
+      const nextRotatedTileId = this.getClockwise(this.nextTileIds[0]);
+      this.nextTileIds[0] = nextRotatedTileId;
+    }
+
+    private getCounterClockwise(tileId:number): number {
+      switch(tileId) {
+        case Tiles.Vertical:
+          return Tiles.Horizontal;
+        case Tiles.Horizontal:
+          return Tiles.Vertical;
+        case Tiles.BottomRightTurn:
+          return Tiles.BottomLeftTurn;
+        case Tiles.BottomLeftTurn:
+          return Tiles.TopLeftTurn;
+        case Tiles.TopLeftTurn:
+          return Tiles.TopRightTurn;
+        case Tiles.TopRightTurn:
+          return Tiles.BottomRightTurn;
+      }
+    }
+
+    private getClockwise(tileId:number): number {
+      switch(tileId) {
+        case Tiles.Horizontal:
+          return Tiles.Vertical;
+        case Tiles.Vertical:
+          return Tiles.Horizontal;
+        case Tiles.BottomLeftTurn:
+          return Tiles.BottomRightTurn;
+        case Tiles.BottomRightTurn:
+          return Tiles.TopRightTurn;
+        case Tiles.TopRightTurn:
+          return Tiles.TopLeftTurn;
+        case Tiles.TopLeftTurn:
+          return Tiles.BottomLeftTurn;
+      }
+    }
+
     render(ctx:CanvasRenderingContext2D, x:number, y:number) {
       this.renderBorder(ctx, x, y);
   
@@ -97,6 +141,44 @@ interface Component {
     }
   }
 
-// class RotateClockwiseBtnComponent {
+class RotateClockwiseBtnComponent implements Component {
+    width:number;
+    height:number;
 
-// }
+  constructor(width:number, height:number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  mouseMove(x:number, y:number) {
+  }
+
+  mouseClick(x:number, y:number) {
+    eventNotifier.notify(ROTATE_NEXT_TILE_CLOCKWISE, {});
+  }
+
+  render(ctx:CanvasRenderingContext2D, x:number, y:number) {
+    rotateClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
+  }
+}
+
+class RotateCounterClockwiseBtnComponent implements Component {
+    width:number;
+    height:number;
+
+  constructor(width:number, height:number) {
+    this.width = width;
+    this.height = height;
+  }
+
+  mouseMove(x:number, y:number) {
+  }
+
+  mouseClick(x:number, y:number) {
+    eventNotifier.notify(ROTATE_NEXT_TILE_COUNTERCLOCKWISE, {});
+  }
+
+  render(ctx:CanvasRenderingContext2D, x:number, y:number) {
+    rotateCounterClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
+  }
+}

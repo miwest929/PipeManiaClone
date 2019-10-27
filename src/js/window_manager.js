@@ -16,8 +16,8 @@ var WindowManager = /** @class */ (function () {
     function WindowManager() {
         this.components = [];
     }
-    WindowManager.prototype.registerComponent = function (component, bbox) {
-        var compBb = { component: component, bbox: bbox };
+    WindowManager.prototype.registerComponent = function (component, bbox, zIndex) {
+        var compBb = { component: component, bbox: bbox, zIndex: zIndex };
         this.components.push(compBb);
     };
     WindowManager.prototype.render = function (ctx, x, y) {
@@ -27,7 +27,6 @@ var WindowManager = /** @class */ (function () {
         });
     };
     WindowManager.prototype.mouseMove = function (x, y) {
-        console.log("MouseMove: " + x + ", " + y);
         var cbb = this.getInBoundsComponent(x, y);
         if (cbb) {
             cbb.component.mouseMove(x - cbb.bbox.x, y - cbb.bbox.y);
@@ -41,9 +40,11 @@ var WindowManager = /** @class */ (function () {
     };
     WindowManager.prototype.getInBoundsComponent = function (x, y) {
         var c = null;
-        this.components.forEach(function (cbb) {
-            if (cbb.bbox.withinBounds(x, y)) {
-                c = cbb;
+        var currZ = 1000000.0;
+        this.components.forEach(function (rc) {
+            if (rc.bbox.withinBounds(x, y) && rc.zIndex < currZ) {
+                c = rc;
+                currZ = rc.zIndex;
             }
         });
         return c;

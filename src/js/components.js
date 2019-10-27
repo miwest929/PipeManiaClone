@@ -29,6 +29,46 @@ var NextTileComponent = /** @class */ (function () {
     };
     NextTileComponent.prototype.mouseClick = function (x, y) {
     };
+    NextTileComponent.prototype.rotateNextCounterClockwise = function () {
+        var nextRotatedTileId = this.getCounterClockwise(this.nextTileIds[0]);
+        this.nextTileIds[0] = nextRotatedTileId;
+    };
+    NextTileComponent.prototype.rotateNextClockwise = function () {
+        var nextRotatedTileId = this.getClockwise(this.nextTileIds[0]);
+        this.nextTileIds[0] = nextRotatedTileId;
+    };
+    NextTileComponent.prototype.getCounterClockwise = function (tileId) {
+        switch (tileId) {
+            case Tiles.Vertical:
+                return Tiles.Horizontal;
+            case Tiles.Horizontal:
+                return Tiles.Vertical;
+            case Tiles.BottomRightTurn:
+                return Tiles.BottomLeftTurn;
+            case Tiles.BottomLeftTurn:
+                return Tiles.TopLeftTurn;
+            case Tiles.TopLeftTurn:
+                return Tiles.TopRightTurn;
+            case Tiles.TopRightTurn:
+                return Tiles.BottomRightTurn;
+        }
+    };
+    NextTileComponent.prototype.getClockwise = function (tileId) {
+        switch (tileId) {
+            case Tiles.Horizontal:
+                return Tiles.Vertical;
+            case Tiles.Vertical:
+                return Tiles.Horizontal;
+            case Tiles.BottomLeftTurn:
+                return Tiles.BottomRightTurn;
+            case Tiles.BottomRightTurn:
+                return Tiles.TopRightTurn;
+            case Tiles.TopRightTurn:
+                return Tiles.TopLeftTurn;
+            case Tiles.TopLeftTurn:
+                return Tiles.BottomLeftTurn;
+        }
+    };
     NextTileComponent.prototype.render = function (ctx, x, y) {
         this.renderBorder(ctx, x, y);
         ctx.font = "20px verdana";
@@ -67,5 +107,33 @@ var NextTileComponent = /** @class */ (function () {
     };
     return NextTileComponent;
 }());
-// class RotateClockwiseBtnComponent {
-// }
+var RotateClockwiseBtnComponent = /** @class */ (function () {
+    function RotateClockwiseBtnComponent(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+    RotateClockwiseBtnComponent.prototype.mouseMove = function (x, y) {
+    };
+    RotateClockwiseBtnComponent.prototype.mouseClick = function (x, y) {
+        eventNotifier.notify(ROTATE_NEXT_TILE_CLOCKWISE, {});
+    };
+    RotateClockwiseBtnComponent.prototype.render = function (ctx, x, y) {
+        rotateClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
+    };
+    return RotateClockwiseBtnComponent;
+}());
+var RotateCounterClockwiseBtnComponent = /** @class */ (function () {
+    function RotateCounterClockwiseBtnComponent(width, height) {
+        this.width = width;
+        this.height = height;
+    }
+    RotateCounterClockwiseBtnComponent.prototype.mouseMove = function (x, y) {
+    };
+    RotateCounterClockwiseBtnComponent.prototype.mouseClick = function (x, y) {
+        eventNotifier.notify(ROTATE_NEXT_TILE_COUNTERCLOCKWISE, {});
+    };
+    RotateCounterClockwiseBtnComponent.prototype.render = function (ctx, x, y) {
+        rotateCounterClockwiseBtn.renderAt(ctx, x, y, this.width, this.height);
+    };
+    return RotateCounterClockwiseBtnComponent;
+}());

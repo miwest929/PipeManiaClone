@@ -31,7 +31,7 @@ manager.registerComponent(rotateClockwiseBtnComponent, rotateCBb, 1);
 
 const rotateCCBb:BoundingBox = new BoundingBox(710, 135, 24, 24);
 const rotateCounterClockwiseBtnComponent = new RotateCounterClockwiseBtnComponent(rotateCCBb.width, rotateCCBb.height);
-manager.registerComponent(rotateClockwiseBtnComponent, rotateCCBb, 1);
+manager.registerComponent(rotateCounterClockwiseBtnComponent, rotateCCBb, 1);
 
 // ----------------- EVENT OBSERVERS -------------------
 let eventNotifier = new EventNotification();
@@ -44,6 +44,14 @@ eventNotifier.attach(TILE_DROPPED_EVENT, () => {
   if (!pipeGrid.isOozing) {
     countdownComponent.startCountdown();
   }
+});
+
+eventNotifier.attach(ROTATE_NEXT_TILE_COUNTERCLOCKWISE, () => {
+  nextTileView.rotateNextCounterClockwise();
+});
+
+eventNotifier.attach(ROTATE_NEXT_TILE_CLOCKWISE, () => {
+  nextTileView.rotateNextClockwise();
 });
 // -----------------------------------------------------
 
