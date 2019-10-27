@@ -1,6 +1,9 @@
 var TILE_DIM = 26;
 var spritesRepo = new SpriteRepository([
-    './src/img/sprites.png'
+    imgUrl('sprites.png'),
+    imgUrl('RotateClockwise.png'),
+    imgUrl('RotateCounterClockwise.png'),
+    imgUrl('FastForward.png')
 ]);
 var spritesImg = spritesRepo.fetch('sprites').image;
 var vertical = new Tile(spritesImg, 2, 164, TILE_DIM, TILE_DIM);
@@ -20,6 +23,12 @@ var bottomEnd = new Tile(spritesImg, 164, 164, TILE_DIM, TILE_DIM);
 var leftEnd = new Tile(spritesImg, 191, 164, TILE_DIM, TILE_DIM);
 var blank = new Tile(spritesImg, 191, 191, TILE_DIM, TILE_DIM);
 var indestructible = new Tile(spritesImg, 29, 110, TILE_DIM, TILE_DIM);
+var rotateClockwiseImg = spritesRepo.fetch('RotateClockwise').image;
+var rotateCounterClockwiseImg = spritesRepo.fetch('RotateCounterClockwise').image;
+var fastForwardImg = spritesRepo.fetch('FastForward').image;
+function imgUrl(filename) {
+    return "./src/img/" + filename;
+}
 function isNonReplacableTile(tileId) {
     return tileId >= 7 && tileId <= 14 || tileId == Tiles.Indestructible;
 }

@@ -127,33 +127,42 @@ class NextTileComponent implements Component {
   }
 
   render(ctx:CanvasRenderingContext2D, x:number, y:number) {
+    this.renderBorder(ctx, x, y);
+
+    ctx.font = "20px verdana";
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("NEXT", x+10, y+40);
+
+    this.renderImmediateNextTile(ctx, x, y);
+    this.renderRemainingNextTiles(ctx, x, y);
+  }
+
+  private renderImmediateNextTile(ctx:CanvasRenderingContext2D, x:number, y:number) {
+    tiles[0].renderAt(ctx, x + (this.width / 4) - 8, y + 50, 64, 64);
+
+    // // render border around the very next tile
+    // ctx.strokeStyle = "rgb(256, 256, 256)";
+    // ctx.lineWidth = 2;
+    // ctx.beginPath();
+    // ctx.rect(x+(this.width/4)-10, y+48, 68, 68);
+    // ctx.stroke();
+  }
+
+  private renderBorder(ctx:CanvasRenderingContext2D, x:number, y:number) {
     ctx.strokeStyle = "rgb(100,100,100)";
     ctx.lineWidth = 10;
 
     ctx.beginPath();
     ctx.rect(x, y, this.width, this.height);
     ctx.stroke();
-  
-    this.renderNextTileView(ctx, x, y);
   }
 
-  private renderNextTileView(ctx, x, y) {
-    ctx.font = "20px verdana";
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("NEXT", x+10, y+40);
-
-    let nextY = 50;
-    this.nextTileIds.forEach((tileId) => {
+  private renderRemainingNextTiles(ctx:CanvasRenderingContext2D, x:number, y:number) {
+    let nextY = 150;
+    this.nextTileIds.slice(1).forEach((tileId) => {
         tiles[tileId].renderAt(ctx, x+(this.width/4)-8, y+nextY, 48, 48);
         nextY += 60;
     });
-
-    // render border around the very next tile
-    ctx.strokeStyle = "rgb(256, 256, 0)";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.rect(x+(this.width/4)-10, y+48, 52, 52);
-    ctx.stroke();
   }
 
   private getRandomTileId(): number {

@@ -82,29 +82,36 @@ var NextTileComponent = /** @class */ (function () {
     NextTileComponent.prototype.mouseClick = function (x, y) {
     };
     NextTileComponent.prototype.render = function (ctx, x, y) {
+        this.renderBorder(ctx, x, y);
+        ctx.font = "20px verdana";
+        ctx.fillStyle = "#ffffff";
+        ctx.fillText("NEXT", x + 10, y + 40);
+        this.renderImmediateNextTile(ctx, x, y);
+        this.renderRemainingNextTiles(ctx, x, y);
+    };
+    NextTileComponent.prototype.renderImmediateNextTile = function (ctx, x, y) {
+        tiles[0].renderAt(ctx, x + (this.width / 4) - 8, y + 50, 64, 64);
+        // // render border around the very next tile
+        // ctx.strokeStyle = "rgb(256, 256, 256)";
+        // ctx.lineWidth = 2;
+        // ctx.beginPath();
+        // ctx.rect(x+(this.width/4)-10, y+48, 68, 68);
+        // ctx.stroke();
+    };
+    NextTileComponent.prototype.renderBorder = function (ctx, x, y) {
         ctx.strokeStyle = "rgb(100,100,100)";
         ctx.lineWidth = 10;
         ctx.beginPath();
         ctx.rect(x, y, this.width, this.height);
         ctx.stroke();
-        this.renderNextTileView(ctx, x, y);
     };
-    NextTileComponent.prototype.renderNextTileView = function (ctx, x, y) {
+    NextTileComponent.prototype.renderRemainingNextTiles = function (ctx, x, y) {
         var _this = this;
-        ctx.font = "20px verdana";
-        ctx.fillStyle = "#ffffff";
-        ctx.fillText("NEXT", x + 10, y + 40);
-        var nextY = 50;
-        this.nextTileIds.forEach(function (tileId) {
+        var nextY = 150;
+        this.nextTileIds.slice(1).forEach(function (tileId) {
             tiles[tileId].renderAt(ctx, x + (_this.width / 4) - 8, y + nextY, 48, 48);
             nextY += 60;
         });
-        // render border around the very next tile
-        ctx.strokeStyle = "rgb(256, 256, 0)";
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.rect(x + (this.width / 4) - 10, y + 48, 52, 52);
-        ctx.stroke();
     };
     NextTileComponent.prototype.getRandomTileId = function () {
         return Math.floor(Math.random() * 7);

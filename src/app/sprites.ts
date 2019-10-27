@@ -29,7 +29,6 @@ let rotateClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateClockwise').i
 let rotateCounterClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateCounterClockwise').image;
 let fastForwardImg:HTMLImageElement = spritesRepo.fetch('FastForward').image;
 
-
 function imgUrl(filename: string) {
   return `./src/img/${filename}`;
 }
@@ -59,7 +58,7 @@ enum Tiles {
   CrossHorizontal,
   Indestructible
 };
-let tiles:Tile[] = [
+const tiles:Tile[] = [
   vertical, horizontal, cross, bottomRightTurn,
   bottomLeftTurn, topRightTurn, topLeftTurn,
   topStart, bottomStart, rightStart, leftStart,

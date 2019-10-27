@@ -8,13 +8,13 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var pipeGrid = new PipeGrid(12, 12, CELL_DIM);
 pipeGrid.loadPuzzle(getPuzzle(1));
-var nextTileBb = new BoundingBox(620, 20, 80, 580);
+var nextTileBb = new BoundingBox(630, 20, 140, 580);
 var nextTileView = new NextTileComponent(nextTileBb.width, nextTileBb.height);
 var manager = new WindowManager();
 manager.registerComponent(nextTileView, nextTileBb);
 var gridComponent = new PipeGridComponent(pipeGrid);
 manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));
-var countdownBb = new BoundingBox(600, 20, 10, 580);
+var countdownBb = new BoundingBox(605, 20, 12, 580);
 var countdownComponent = new CountdownTimer(countdownBb.width, countdownBb.height);
 manager.registerComponent(countdownComponent, countdownBb);
 // ----------------- EVENT OBSERVERS -------------------
