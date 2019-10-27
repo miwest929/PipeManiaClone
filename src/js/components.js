@@ -51,6 +51,8 @@ var NextTileComponent = /** @class */ (function () {
                 return Tiles.TopRightTurn;
             case Tiles.TopRightTurn:
                 return Tiles.BottomRightTurn;
+            default:
+                return tileId;
         }
     };
     NextTileComponent.prototype.getClockwise = function (tileId) {
@@ -67,6 +69,8 @@ var NextTileComponent = /** @class */ (function () {
                 return Tiles.TopLeftTurn;
             case Tiles.TopLeftTurn:
                 return Tiles.BottomLeftTurn;
+            default:
+                return tileId;
         }
     };
     NextTileComponent.prototype.render = function (ctx, x, y) {

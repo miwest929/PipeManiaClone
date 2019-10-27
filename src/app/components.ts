@@ -76,6 +76,8 @@ interface Component {
           return Tiles.TopRightTurn;
         case Tiles.TopRightTurn:
           return Tiles.BottomRightTurn;
+        default:
+          return tileId;
       }
     }
 
@@ -93,6 +95,8 @@ interface Component {
           return Tiles.TopLeftTurn;
         case Tiles.TopLeftTurn:
           return Tiles.BottomLeftTurn;
+        default:
+          return tileId;
       }
     }
 

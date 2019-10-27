@@ -100,10 +100,15 @@ var PipeGrid = /** @class */ (function () {
                     console.log("Default = " + tileMovements[oozeCellId]["DEFAULT"] + ", NextDirection = " + this.oozeDirection);
                     this.oozedCells.push([this.oozeRow, this.oozeCol]);
                     var newCoords = this.getNextOozeCell(this.oozeDirection);
-                    this.oozeRow = newCoords[0];
-                    this.oozeCol = newCoords[1];
-                    var newTileId = this.grid[this.oozeRow][this.oozeCol];
-                    this.oozeReverse = tileMovements[newTileId]["DEFAULT"] !== this.oozeDirection;
+                    if (this.areConnected(newCoords[0], newCoords[1], this.oozeDirection)) {
+                        this.oozeRow = newCoords[0];
+                        this.oozeCol = newCoords[1];
+                        var newTileId = this.grid[this.oozeRow][this.oozeCol];
+                        this.oozeReverse = tileMovements[newTileId]["DEFAULT"] !== this.oozeDirection;
+                    }
+                    else {
+                        console.log("GAME OVER!");
+                    }
                 }
             }
         }
@@ -223,6 +228,10 @@ var PipeGrid = /** @class */ (function () {
                 this.renderOozeLine(x + adjustedX, y + adjustedY, adjustedLength, progressLine[3]);
             }
         }
+    };
+    PipeGrid.prototype.areConnected = function (nextRow, nextCol, direction) {
+        var nextTileId = this.grid[nextRow][nextCol];
+        return !!(tileMovements[nextTileId] && tileMovements[nextTileId][direction]);
     };
     PipeGrid.prototype.getNextOozeCell = function (direction) {
         var deltaRow = 0;
