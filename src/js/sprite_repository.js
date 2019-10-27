@@ -45,6 +45,9 @@ var Tile = /** @class */ (function () {
         this.tileWidth = tileWidth;
         this.tileHeight = tileHeight;
     }
+    Tile.createFrom = function (img) {
+        return new Tile(img, 0, 0, img.width, img.height);
+    };
     // renderedWidth -> width on destination canvas
     // renderedHeight -> height on destination canvas
     // this.tileWidth -> width in source image

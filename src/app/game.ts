@@ -11,7 +11,7 @@ let ctx:CanvasRenderingContext2D = canvas.getContext('2d');
 let pipeGrid:PipeGrid = new PipeGrid(12, 12, CELL_DIM);
 pipeGrid.loadPuzzle(getPuzzle(1));
 
-let nextTileBb:BoundingBox = new BoundingBox(630, 20, 140, 580);
+let nextTileBb:BoundingBox = new BoundingBox(640, 20, 120, 580);
 let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
 let manager:WindowManager = new WindowManager();
 
@@ -20,10 +20,12 @@ manager.registerComponent(nextTileView, nextTileBb);
 let gridComponent = new PipeGridComponent(pipeGrid);
 manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));
 
-let countdownBb:BoundingBox = new BoundingBox(605, 20, 12, 580);
+let countdownBb:BoundingBox = new BoundingBox(610, 20, 12, 580);
 let countdownComponent = new CountdownTimer(countdownBb.width, countdownBb.height);
 
 manager.registerComponent(countdownComponent, countdownBb);
+
+//let rotateClockwiseBtnComponent = new RotateClockwiseBtnComponent();
 
 // ----------------- EVENT OBSERVERS -------------------
 let eventNotifier = new EventNotification();

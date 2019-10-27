@@ -1,33 +1,38 @@
-let TILE_DIM:number = 26;
-let spritesRepo:SpriteRepository = new SpriteRepository([
+const TILE_DIM:number = 26;
+const spritesRepo:SpriteRepository = new SpriteRepository([
   imgUrl('sprites.png'),
   imgUrl('RotateClockwise.png'),
   imgUrl('RotateCounterClockwise.png'),
   imgUrl('FastForward.png')
 ]);
-let spritesImg:HTMLImageElement = spritesRepo.fetch('sprites').image;
+const spritesImg:HTMLImageElement = spritesRepo.fetch('sprites').image;
 
-let vertical:Tile = new Tile(spritesImg, 2, 164, TILE_DIM, TILE_DIM);
-let horizontal:Tile = new Tile(spritesImg, 2, 191, TILE_DIM, TILE_DIM);
-let cross:Tile = new Tile(spritesImg, 29, 191, TILE_DIM, TILE_DIM);
-let bottomRightTurn:Tile = new Tile(spritesImg, 56, 164, TILE_DIM, TILE_DIM);
-let bottomLeftTurn:Tile = new Tile(spritesImg, 83, 164, TILE_DIM, TILE_DIM);
-let topRightTurn:Tile = new Tile(spritesImg, 56, 191, TILE_DIM, TILE_DIM);
-let topLeftTurn:Tile = new Tile(spritesImg, 83, 191, TILE_DIM, TILE_DIM);
-let topStart:Tile = new Tile(spritesImg, 29, 164, TILE_DIM, TILE_DIM);
-let rightStart:Tile = new Tile(spritesImg, 110, 191, TILE_DIM, TILE_DIM);
-let bottomStart:Tile = new Tile(spritesImg, 137, 191, TILE_DIM, TILE_DIM);
-let leftStart:Tile = new Tile(spritesImg, 164, 191, TILE_DIM, TILE_DIM);
-let topEnd:Tile = new Tile(spritesImg, 110, 164, TILE_DIM, TILE_DIM);
-let rightEnd:Tile = new Tile(spritesImg, 138, 164, TILE_DIM, TILE_DIM);
-let bottomEnd:Tile = new Tile(spritesImg, 164, 164, TILE_DIM, TILE_DIM);
-let leftEnd:Tile = new Tile(spritesImg, 191, 164, TILE_DIM, TILE_DIM);
-let blank:Tile = new Tile(spritesImg, 191, 191, TILE_DIM, TILE_DIM);
-let indestructible:Tile = new Tile(spritesImg, 29, 110, TILE_DIM, TILE_DIM);
+const vertical:Tile = new Tile(spritesImg, 2, 164, TILE_DIM, TILE_DIM);
+const horizontal:Tile = new Tile(spritesImg, 2, 191, TILE_DIM, TILE_DIM);
+const cross:Tile = new Tile(spritesImg, 29, 191, TILE_DIM, TILE_DIM);
+const bottomRightTurn:Tile = new Tile(spritesImg, 56, 164, TILE_DIM, TILE_DIM);
+const bottomLeftTurn:Tile = new Tile(spritesImg, 83, 164, TILE_DIM, TILE_DIM);
+const topRightTurn:Tile = new Tile(spritesImg, 56, 191, TILE_DIM, TILE_DIM);
+const topLeftTurn:Tile = new Tile(spritesImg, 83, 191, TILE_DIM, TILE_DIM);
+const topStart:Tile = new Tile(spritesImg, 29, 164, TILE_DIM, TILE_DIM);
+const rightStart:Tile = new Tile(spritesImg, 110, 191, TILE_DIM, TILE_DIM);
+const bottomStart:Tile = new Tile(spritesImg, 137, 191, TILE_DIM, TILE_DIM);
+const leftStart:Tile = new Tile(spritesImg, 164, 191, TILE_DIM, TILE_DIM);
+const topEnd:Tile = new Tile(spritesImg, 110, 164, TILE_DIM, TILE_DIM);
+const rightEnd:Tile = new Tile(spritesImg, 138, 164, TILE_DIM, TILE_DIM);
+const bottomEnd:Tile = new Tile(spritesImg, 164, 164, TILE_DIM, TILE_DIM);
+const leftEnd:Tile = new Tile(spritesImg, 191, 164, TILE_DIM, TILE_DIM);
+const blank:Tile = new Tile(spritesImg, 191, 191, TILE_DIM, TILE_DIM);
+const indestructible:Tile = new Tile(spritesImg, 29, 110, TILE_DIM, TILE_DIM);
 
-let rotateClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateClockwise').image;
-let rotateCounterClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateCounterClockwise').image;
-let fastForwardImg:HTMLImageElement = spritesRepo.fetch('FastForward').image;
+const rotateClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateClockwise').image;
+const rotateClockwiseBtn = Tile.createFrom(rotateClockwiseImg);
+
+const rotateCounterClockwiseImg:HTMLImageElement = spritesRepo.fetch('RotateCounterClockwise').image;
+const rotateCounterClockwiseBtn = Tile.createFrom(rotateCounterClockwiseImg);
+
+const fastForwardImg:HTMLImageElement = spritesRepo.fetch('FastForward').image;
+const fastForwardBtn = Tile.createFrom(fastForwardImg);
 
 function imgUrl(filename: string) {
   return `./src/img/${filename}`;

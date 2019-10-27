@@ -24,8 +24,11 @@ var leftEnd = new Tile(spritesImg, 191, 164, TILE_DIM, TILE_DIM);
 var blank = new Tile(spritesImg, 191, 191, TILE_DIM, TILE_DIM);
 var indestructible = new Tile(spritesImg, 29, 110, TILE_DIM, TILE_DIM);
 var rotateClockwiseImg = spritesRepo.fetch('RotateClockwise').image;
+var rotateClockwiseBtn = Tile.createFrom(rotateClockwiseImg);
 var rotateCounterClockwiseImg = spritesRepo.fetch('RotateCounterClockwise').image;
+var rotateCounterClockwiseBtn = Tile.createFrom(rotateCounterClockwiseImg);
 var fastForwardImg = spritesRepo.fetch('FastForward').image;
+var fastForwardBtn = Tile.createFrom(fastForwardImg);
 function imgUrl(filename) {
     return "./src/img/" + filename;
 }

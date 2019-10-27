@@ -59,6 +59,10 @@ class Tile {
     this.tileHeight = tileHeight;
   }
 
+  public static createFrom(img: HTMLImageElement): Tile {
+    return new Tile(img, 0, 0, img.width, img.height);
+  }
+
   // renderedWidth -> width on destination canvas
   // renderedHeight -> height on destination canvas
   // this.tileWidth -> width in source image
