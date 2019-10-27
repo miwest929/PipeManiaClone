@@ -15,17 +15,23 @@ let nextTileBb:BoundingBox = new BoundingBox(640, 20, 120, 580);
 let nextTileView:NextTileComponent = new NextTileComponent(nextTileBb.width, nextTileBb.height);
 let manager:WindowManager = new WindowManager();
 
-manager.registerComponent(nextTileView, nextTileBb);  
+manager.registerComponent(nextTileView, nextTileBb, 55);  
 
 let gridComponent = new PipeGridComponent(pipeGrid);
-manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20));
+manager.registerComponent(gridComponent, pipeGrid.boundingBox(20, 20), 101);
 
 let countdownBb:BoundingBox = new BoundingBox(610, 20, 12, 580);
 let countdownComponent = new CountdownTimer(countdownBb.width, countdownBb.height);
 
-manager.registerComponent(countdownComponent, countdownBb);
+manager.registerComponent(countdownComponent, countdownBb, 100);
 
-//let rotateClockwiseBtnComponent = new RotateClockwiseBtnComponent();
+const rotateCBb:BoundingBox = new BoundingBox(670, 135, 24, 24);
+const rotateClockwiseBtnComponent = new RotateClockwiseBtnComponent(rotateCBb.width, rotateCBb.height);
+manager.registerComponent(rotateClockwiseBtnComponent, rotateCBb, 1);
+
+const rotateCCBb:BoundingBox = new BoundingBox(710, 135, 24, 24);
+const rotateCounterClockwiseBtnComponent = new RotateCounterClockwiseBtnComponent(rotateCCBb.width, rotateCCBb.height);
+manager.registerComponent(rotateClockwiseBtnComponent, rotateCCBb, 1);
 
 // ----------------- EVENT OBSERVERS -------------------
 let eventNotifier = new EventNotification();

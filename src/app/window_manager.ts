@@ -22,20 +22,21 @@ class BoundingBox {
     }
 }
 
-type ComponentBoundingBox = {
+type RegisteredComponent = {
   component:Component;
   bbox:BoundingBox;
+  zIndex:number;
 }
 
 class WindowManager {
-    components:ComponentBoundingBox[];
+    components:RegisteredComponent[];
 
     constructor() {
         this.components = [];
     }
 
-    registerComponent(component:Component, bbox:BoundingBox) {
-        let compBb:ComponentBoundingBox = {component, bbox};
+    registerComponent(component:Component, bbox:BoundingBox, zIndex: number) {
+        let compBb:RegisteredComponent = {component, bbox, zIndex};
         this.components.push(compBb);
     }
 
@@ -62,10 +63,12 @@ class WindowManager {
     }
 
     private getInBoundsComponent(x:number, y:number) {
-        let c:ComponentBoundingBox = null;
-        this.components.forEach(cbb => {
-            if (cbb.bbox.withinBounds(x, y)) {
-              c = cbb;       
+        let c:RegisteredComponent = null;
+        let currZ:number = this.components[0].zIndex;
+        this.components.forEach(rc => {
+            if (rc.bbox.withinBounds(x, y) && rc.zIndex < currZ) {
+              c = rc;    
+              currZ = rc.zIndex;   
             }
         });
 
